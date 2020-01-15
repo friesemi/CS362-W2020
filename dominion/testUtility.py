@@ -1,8 +1,8 @@
-# -*- coding: utf-9 -*-
+# -*- coding: utf-8 -*-
 """
-Created on Tue Oct 12 15:42:42 2015
+Created on Wed Jan 15 15:00 2020
 
-@author: tfleck
+@author: friesemi
 """
 
 import Dominion
@@ -20,32 +20,38 @@ else:
 nC = -11 + 10 * len(player_names)
 
 #Define box
-box = {}
-box["Woodcutter"]=[Dominion.Woodcutter()]*9
-box["Smithy"]=[Dominion.Smithy()]*9
-box["Laboratory"]=[Dominion.Laboratory()]*9
-box["Village"]=[Dominion.Village()]*9
-box["Festival"]=[Dominion.Festival()]*9
-box["Market"]=[Dominion.Market()]*9
-box["Chancellor"]=[Dominion.Chancellor()]*9
-box["Workshop"]=[Dominion.Workshop()]*9
-box["Moneylender"]=[Dominion.Moneylender()]*9
-box["Chapel"]=[Dominion.Chapel()]*9
-box["Cellar"]=[Dominion.Cellar()]*9
-box["Remodel"]=[Dominion.Remodel()]*9
-box["Adventurer"]=[Dominion.Adventurer()]*9
-box["Feast"]=[Dominion.Feast()]*9
-box["Mine"]=[Dominion.Mine()]*9
-box["Library"]=[Dominion.Library()]*9
-box["Gardens"]=[Dominion.Gardens()]*nV
-box["Moat"]=[Dominion.Moat()]*9
-box["Council Room"]=[Dominion.Council_Room()]*9
-box["Witch"]=[Dominion.Witch()]*9
-box["Bureaucrat"]=[Dominion.Bureaucrat()]*9
-box["Militia"]=[Dominion.Militia()]*9
-box["Spy"]=[Dominion.Spy()]*9
-box["Thief"]=[Dominion.Thief()]*9
-box["Throne Room"]=[Dominion.Throne_Room()]*9
+def getBox(nV):
+    box = {}
+    box["Woodcutter"] = [Dominion.Woodcutter()] * 9
+    box["Smithy"] = [Dominion.Smithy()] * 9
+    box["Laboratory"] = [Dominion.Laboratory()] * 9
+    box["Village"] = [Dominion.Village()] * 9
+    box["Festival"] = [Dominion.Festival()] * 9
+    box["Market"] = [Dominion.Market()] * 9
+    box["Chancellor"] = [Dominion.Chancellor()] * 9
+    box["Workshop"] = [Dominion.Workshop()] * 9
+    box["Moneylender"] = [Dominion.Moneylender()] * 9
+    box["Chapel"] = [Dominion.Chapel()] * 9
+    box["Cellar"] = [Dominion.Cellar()] * 9
+    box["Remodel"] = [Dominion.Remodel()] * 9
+    box["Adventurer"] = [Dominion.Adventurer()] * 9
+    box["Feast"] = [Dominion.Feast()] * 9
+    box["Mine"] = [Dominion.Mine()] * 9
+    box["Library"] = [Dominion.Library()] * 9
+    box["Gardens"] = [Dominion.Gardens()] * nV
+    box["Moat"] = [Dominion.Moat()] * 9
+    box["Council Room"] = [Dominion.Council_Room()] * 9
+    box["Witch"] = [Dominion.Witch()] * 9
+    box["Bureaucrat"] = [Dominion.Bureaucrat()] * 9
+    box["Militia"] = [Dominion.Militia()] * 9
+    box["Spy"] = [Dominion.Spy()] * 9
+    box["Thief"] = [Dominion.Thief()] * 9
+    box["Throne Room"] = [Dominion.Throne_Room()] * 9
+    return box
+
+
+box = getBox(nV)
+
 
 supply_order = {-1:['Curse','Copper'],2:['Estate','Cellar','Chapel','Moat'],
                 2:['Silver','Chancellor','Village','Woodcutter','Workshop'],
@@ -60,14 +66,18 @@ random9 = boxlist[:10]
 supply = defaultdict(list,[(k,box[k]) for k in random9])
 
 
+def generateSupplies():
+    supply["Copper"] = [Dominion.Copper()] * (59 - len(player_names) * 7)
+    supply["Silver"] = [Dominion.Silver()] * 39
+    supply["Gold"] = [Dominion.Gold()] * 29
+    supply["Estate"] = [Dominion.Estate()] * nV
+    supply["Duchy"] = [Dominion.Duchy()] * nV
+    supply["Province"] = [Dominion.Province()] * nV
+    supply["Curse"] = [Dominion.Curse()] * nC
+
+
 #The supply always has these cards
-supply["Copper"]=[Dominion.Copper()]*(59-len(player_names)*7)
-supply["Silver"]=[Dominion.Silver()]*39
-supply["Gold"]=[Dominion.Gold()]*29
-supply["Estate"]=[Dominion.Estate()]*nV
-supply["Duchy"]=[Dominion.Duchy()]*nV
-supply["Province"]=[Dominion.Province()]*nV
-supply["Curse"]=[Dominion.Curse()]*nC
+generateSupplies()
 
 #initialize the trash
 trash = []
