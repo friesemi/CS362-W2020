@@ -22,8 +22,8 @@ else:
 nC = -10 + 10 * len(player_names)
 
 #Define box
-#Introduced bug to create fewer cards than required by the rules
-box = testUtility.getBoxes(0)
+#Introduced bug to create fewer cards than required by the rules, causing the game to end faster
+box = testUtility.getBox(1)
 
 
 #Pick 10 cards from box to be in the supply.
@@ -35,25 +35,20 @@ supply = defaultdict(list,[(k,box[k]) for k in random10])
 
 #The supply always has these cards
 #Introduced a bug so fewer cards are put in the game than required
-testUtility.generateSupplies(0)
+supply = testUtility.generateSupplies(1, nC, supply, player_names)
+
 
 #initialize the trash
 trash = []
 
 #Costruct the Player objects
 players = []
-for name in player_names:
-    if name[0]=="*":
-        players.append(Dominion.ComputerPlayer(name[1:]))
-    elif name[0]=="^":
-        players.append(Dominion.TablePlayer(name[1:]))
-    else:
-        players.append(Dominion.Player(name))
+players = testUtility.getPlayers(players, player_names)
 
 #Play the game
 turn = 0
 while not Dominion.gameover(supply):
-    turn += 1    
+    turn += 1
     print("\r")    
     for value in testUtility.supply_order:
         print (value)
@@ -68,7 +63,6 @@ while not Dominion.gameover(supply):
         if not Dominion.gameover(supply):
             print("\r")
             player.turn(players,supply,trash)
-            
 
 #Final score
 dcs=Dominion.cardsummaries(players)

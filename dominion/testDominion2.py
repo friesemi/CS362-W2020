@@ -21,7 +21,7 @@ else:
 nC = -10 + 10 * len(player_names)
 
 #Define box
-box = testUtility.getBoxes(nV)
+box = testUtility.getBox(nV)
 
 
 #Pick 10 cards from box to be in the supply.
@@ -32,7 +32,7 @@ supply = defaultdict(list,[(k,box[k]) for k in random10])
 
 
 #The supply always has these cards
-testUtility.generateSupplies(nV)
+supply = testUtility.generateSupplies(nV, nC, supply, player_names)
 
 
 #initialize the trash
@@ -40,18 +40,13 @@ trash = []
 
 #Costruct the Player objects
 players = []
-for name in player_names:
-    if name[0]=="*":
-        players.append(Dominion.ComputerPlayer(name[1:]))
-    elif name[0]=="^":
-        players.append(Dominion.TablePlayer(name[1:]))
-    else:
-        players.append(Dominion.Player(name))
+players = testUtility.getPlayers(players, player_names)
 
 #Play the game
-turn  = 0
+#introduced bug to throw off the turns of the game
+turn = 10
 while not Dominion.gameover(supply):
-    turn += 1    
+    turn += 5  
     print("\r")    
     for value in testUtility.supply_order:
         print (value)
