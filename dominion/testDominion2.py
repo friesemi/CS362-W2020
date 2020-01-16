@@ -24,12 +24,6 @@ nC = -10 + 10 * len(player_names)
 box = testUtility.getBoxes(nV)
 
 
-supply_order = {0:['Curse','Copper'],2:['Estate','Cellar','Chapel','Moat'],
-                3:['Silver','Chancellor','Village','Woodcutter','Workshop'],
-                4:['Gardens','Bureaucrat','Feast','Militia','Moneylender','Remodel','Smithy','Spy','Thief','Throne Room'],
-                5:['Duchy','Market','Council Room','Festival','Laboratory','Library','Mine','Witch'],
-                6:['Gold','Adventurer'],8:['Province']}
-
 #Pick 10 cards from box to be in the supply.
 boxlist = [k for k in box]
 random.shuffle(boxlist)
@@ -38,7 +32,7 @@ supply = defaultdict(list,[(k,box[k]) for k in random10])
 
 
 #The supply always has these cards
-testUtility.generateSupplies()
+testUtility.generateSupplies(nV)
 
 
 #initialize the trash
@@ -59,9 +53,9 @@ turn  = 0
 while not Dominion.gameover(supply):
     turn += 1    
     print("\r")    
-    for value in supply_order:
+    for value in testUtility.supply_order:
         print (value)
-        for stack in supply_order[value]:
+        for stack in testUtility.supply_order[value]:
             if stack in supply:
                 print (stack, len(supply[stack]))
     print("\r")

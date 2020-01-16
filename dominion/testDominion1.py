@@ -16,18 +16,15 @@ player_names = ["Annie","*Ben","*Carla"]
 #number of curses and victory cards
 if len(player_names)>2:
     nV=12
+
 else:
     nV=8
 nC = -10 + 10 * len(player_names)
 
 #Define box
-box = testUtility.getBoxes(nV)
+#Introduced bug to create fewer cards than required by the rules
+box = testUtility.getBoxes(0)
 
-supply_order = {0:['Curse','Copper'],2:['Estate','Cellar','Chapel','Moat'],
-                3:['Silver','Chancellor','Village','Woodcutter','Workshop'],
-                4:['Gardens','Bureaucrat','Feast','Militia','Moneylender','Remodel','Smithy','Spy','Thief','Throne Room'],
-                5:['Duchy','Market','Council Room','Festival','Laboratory','Library','Mine','Witch'],
-                6:['Gold','Adventurer'],8:['Province']}
 
 #Pick 10 cards from box to be in the supply.
 boxlist = [k for k in box]
@@ -37,7 +34,8 @@ supply = defaultdict(list,[(k,box[k]) for k in random10])
 
 
 #The supply always has these cards
-testUtility.generateSupplies()
+#Introduced a bug so fewer cards are put in the game than required
+testUtility.generateSupplies(0)
 
 #initialize the trash
 trash = []
@@ -53,13 +51,13 @@ for name in player_names:
         players.append(Dominion.Player(name))
 
 #Play the game
-turn  = 0
+turn = 0
 while not Dominion.gameover(supply):
     turn += 1    
     print("\r")    
-    for value in supply_order:
+    for value in testUtility.supply_order:
         print (value)
-        for stack in supply_order[value]:
+        for stack in testUtility.supply_order[value]:
             if stack in supply:
                 print (stack, len(supply[stack]))
     print("\r")
